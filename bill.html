@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bill - www.desichai.com</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #nav1 {
+            background-color: white;
+            height: 3cm;
+            font-size: 0.5cm;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: #672717;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1cm;
+        }
+
+        #nav1 img {
+            width: 3.5cm;
+            height: 3cm;
+        }
+
+        .login-container {
+            display: flex;
+            gap: 1cm;
+        }
+
+        .login-links {
+            text-decoration: none;
+            color: #672717;
+        }
+
+        .login-links:hover {
+            text-decoration: underline;
+        }
+
+        .bill-container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .bill-container h1 {
+            text-align: center;
+            color: #672717;
+        }
+
+        .bill-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .bill-container table, .bill-container th, .bill-container td {
+            border: 1px solid #672717;
+        }
+
+        .bill-container th, .bill-container td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .bill-container th {
+            background-color: #672717;
+            color: white;
+        }
+
+        .bill-container td {
+            background-color: #f9f9f9;
+        }
+
+        .total-row {
+            font-weight: bold;
+        }
+
+        .date-row {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav1">
+        <img src="chai.png" alt="Logo">
+        <div class="login-container">
+            <a href="index.html" class="login-links">HOME</a>
+            <a href="menu2.html" class="login-links">MENU</a>
+            <a href="franchise.html" class="login-links">FRANCHISE</a>
+            <a href="aboutus.html" class="login-links">ABOUT US</a>
+            <a href="record.html" class="login-links">RECORDS</a>
+        </div>
+    </div>
+
+    <div class="bill-container">
+        <h1>Bill</h1>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            <tbody id="billTableBody"></tbody>
+            <tr class="total-row">
+                <td colspan="2">Total Amount</td>
+                <td id="totalAmountCell"></td>
+            </tr>
+        </table>
+        <p class="date-row">Date: <span id="orderDate"></span></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const order = JSON.parse(localStorage.getItem('currentOrder'));
+            if (order) {
+                const tableBody = document.getElementById('billTableBody');
+                order.items.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.item}</td><td>${item.quantity}</td><td>${item.total}</td>`;
+                    tableBody.appendChild(row);
+                });
+
+                document.getElementById('totalAmountCell').textContent = `Rs ${order.totalAmount}`;
+                document.getElementById('orderDate').textContent = order.date;
+            }
+        });
+    </script>
+</body>
+</html>

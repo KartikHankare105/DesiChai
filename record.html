@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Records - DESI CHAI</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        #nav1 {
+            background-color: white;
+            height: 3cm;
+            font-size: 0.5cm;
+            color: #672717;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1cm;
+        }
+        #nav1 img {
+            width: 3.5cm;
+            height: 3cm;
+        }
+        .login-container {
+            display: flex;
+            gap: 1cm;
+        }
+        .login-links {
+            text-decoration: none;
+            color: #672717;
+        }
+        .login-links:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 2cm;
+        }
+        .total-sale, .total-orders {
+            font-size: 1cm;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #672717;
+        }
+        .record-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="nav1">
+        <img src="chai.png" alt="Logo">
+        <div class="login-container">
+            <a href="index.html" class="login-links">HOME</a>
+            <a href="menu2.html" class="login-links">MENU</a>
+            <a href="franchise.html" class="login-links">FRANCHISE</a>
+            <a href="aboutus.html" class="login-links">ABOUT US</a>
+            <a href="record.html" class="login-links">RECORDS</a>
+        </div>
+    </div>
+    
+    <div class="content">
+        <h1>Order Records</h1>
+        <div id="records"></div>
+        <div id="total-orders" class="total-orders"></div>
+        <div id="total-sale" class="total-sale"></div>
+    </div>
+
+    <script>
+        function updateOrderSummary() {
+            const records = JSON.parse(localStorage.getItem('orders')) || [];
+            const recordsDiv = document.getElementById('records');
+            let totalSale = 0;
+            let totalOrders = 0;
+
+            const prices = {
+                "Chai": 15,
+                "Chocolate": 10,
+                "Cake": 5,
+                "Idli Plate (2 pieces)": 20,
+                "Medu Vada (2 pieces)": 30,
+                "Combo": 50,
+                "Matri": 25,
+                "Vada Pav": 20,
+                "Poha": 30
+            };
+
+            const totalQuantities = {
+                "Chai": 0,
+                "Chocolate": 0,
+                "Cake": 0,
+                "Idli Plate (2 pieces)": 0,
+                "Medu Vada (2 pieces)": 0,
+                "Combo": 0,
+                "Matri": 0,
+                "Vada Pav": 0,
+                "Poha": 0
+            };
+
+            records.forEach(order => {
+                order.items.forEach(({ item, quantity }) => {
+                    totalQuantities[item] += parseInt(quantity);
+                    totalSale += prices[item] * quantity;
+                    totalOrders += parseInt(quantity);
+                });
+            });
+
+            recordsDiv.innerHTML = '';
+            for (const [item, quantity] of Object.entries(totalQuantities)) {
+                const recordItem = document.createElement('div');
+                recordItem.className = 'record-item';
+                recordItem.textContent = `${item}: ${quantity}`;
+                recordsDiv.appendChild(recordItem);
+            }
+
+            document.getElementById('total-orders').textContent = `Total Orders: ${totalOrders}`;
+            document.getElementById('total-sale').textContent = `Total Sale: Rs ${totalSale}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateOrderSummary);
+    </script>
+</body>
+</html>

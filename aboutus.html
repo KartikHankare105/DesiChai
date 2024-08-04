@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - DESI CHAI</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        #nav1 {
+            background-color: white;
+            height: 3cm;
+            font-size: 0.5cm;
+            color: #672717;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1cm;
+        }
+        #nav1 img {
+            width: 3.5cm;
+            height: 3cm;
+        }
+        .login-container {
+            display: flex;
+            gap: 1cm;
+        }
+        .login-links {
+            text-decoration: none;
+            color: #672717;
+        }
+        .login-links:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 2cm;
+        }
+        .total-sale, .total-orders {
+            font-size: 1cm;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #672717;
+        }
+        .team-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2cm;
+            padding: 2cm;
+            background-color: white;
+            margin-bottom: 2cm;
+        }
+        .team-member {
+            width: 10cm;
+            height:8cm; 
+            text-align: center;
+            border: 2px solid #672717;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .team-member img {
+            width: 100%; /* Adjust width */
+            height: 100%; /* Adjust height */
+            object-fit: cover;
+            border-bottom: 2px solid #672717;
+        }
+        .reviews {
+            margin-top: 2cm;
+        }
+        .review {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1cm;
+            margin-bottom: 1cm;
+        }
+        .review h3 {
+            margin: 0;
+            color: #672717;
+        }
+        .review p {
+            color: brown;
+            margin: 0.5cm 0 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav1">
+        <img src="chai.png" alt="Logo">
+        <div class="login-container">
+            <a href="index.html" class="login-links">HOME</a>
+            <a href="menu2.html" class="login-links">MENU</a>
+            <a href="franchise.html" class="login-links">FRANCHISE</a>
+            <a href="aboutus.html" class="login-links">ABOUT US</a>
+            <a href="record.html" class="login-links">RECORDS</a>
+        </div>
+    </div>
+    
+    <div class="team-section">
+        <div class="team-member">
+            <img src="founder.jpg" alt="Founder">
+        </div>
+        <div class="team-member">
+            <img src="team1.png" alt="Team Member 1">
+        </div>
+        <div class="team-member">
+            <img src="team2.png" alt="Team Member 2">
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>About Us</h1>
+        <p>Welcome to DESI CHAI! We are passionate about serving the best tea and snacks. Learn more about our journey, our team, and what makes us special.</p>
+
+    
+        <div class="reviews">
+            <h2>Customer Reviews</h2>
+            <div class="review">
+                <h3>Rohan Abhang</h3>
+                <p>The best chai I've ever had! The ambiance is wonderful, and the staff is incredibly friendly.</p>
+            </div>
+            <div class="review">
+                <h3>Vanshika Bhanusahli</h3>
+                <p>Great snacks. The Chai is a must-try!</p>
+            </div>
+            <div class="review">
+                <h3>Saajan Nair</h3>
+                <p>Great value for money. The combo is fantastic, especially if you love a hearty breakfast.</p>
+            </div>
+            <div class="review">
+                <h3>Nikhil Prasad</h3>
+                <p>Price Efficeint and Idli were Fresh.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateOrderSummary() {
+            const quantities = JSON.parse(localStorage.getItem('quantities')) || [];
+            const recordsDiv = document.getElementById('records');
+            let totalSale = 0;
+            let totalOrders = 0;
+
+            const prices = {
+                "Chai": 15,
+                "Coffee": 15,
+                "Idli Plate (2 pieces)": 20,
+                "Medu Vada (2 pieces)": 30,
+                "Combo": 50
+            };
+
+            const totalQuantities = {
+                "Chai": 0,
+                "Coffee": 0,
+                "Idli Plate (2 pieces)": 0,
+                "Medu Vada (2 pieces)": 0,
+                "Combo": 0
+            };
+
+            quantities.forEach(({ item, quantity }) => {
+                totalQuantities[item] += parseInt(quantity);
+                totalSale += prices[item] * quantity;
+                totalOrders += parseInt(quantity);
+            });
+
+            recordsDiv.innerHTML = '';
+            for (const [item, quantity] of Object.entries(totalQuantities)) {
+                const recordItem = document.createElement('div');
+                recordItem.className = 'record-item';
+                recordItem.textContent = `${item}: ${quantity}`;
+                recordsDiv.appendChild(recordItem);
+            }
+
+            document.getElementById('total-orders').textContent = `Total Orders: ${totalOrders}`;
+            document.getElementById('total-sale').textContent = `Total Sale: Rs ${totalSale}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', updateOrderSummary);
+    </script>
+</body>
+</html>
